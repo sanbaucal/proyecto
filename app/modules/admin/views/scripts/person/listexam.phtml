@@ -1,0 +1,133 @@
+<?php 
+if ($this->dataExam) {	?>
+	<hr>
+	<div class="row"> 
+		<div class="col-md-12">
+			<div class="col-md-1 col-md-offset-9">
+				<a href="/admin/person/printexam/id/<?php echo $this->pid ?>" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+			</div>
+		</div>
+	</div>
+	<br>
+	<table class="table table-hover table-stripped table-condensed table-bordered">
+		<thead>
+			<tr>
+				<th class="text-center">#</th>
+				<th class="text-center">Descripción</th>
+				<th class="text-center">Resultado</th>
+				<th class="text-center"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+			foreach ($this->dataExam as $k => $exam) {	?>
+				<tr data-description="<?php echo $exam['description'] ?>" data-result="<?php echo $exam['result'] ?>" data-epid="<?php echo $exam['epid'] ?>">
+					<td class="text-center"><?php echo $k+1 ?></td>
+					<td class="js_input_description"><?php echo $exam['description'] ?></td>
+					<td class="js_input_result text-center"><?php echo $exam['result'] ?></td>
+					<td class="js_button_item_all text-center">
+						<button class="btn btn-warning btn-xs js_edit_item_exam" onclick="editItemExam(this)"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button class="btn btn-danger btn-xs js_remove_item_exam" onclick="removeItemExam(this)"><span class="glyphicon glyphicon-trash"></span></button>
+					</td>
+				</tr>
+			<?php	
+			}
+			?>	
+		</tbody>
+	</table>
+<?php
+}
+?>
+
+<script type="text/javascript">
+
+	function editItemExam(scope){
+		var tr = $(scope).parent().parent()
+		var td_description = $(tr).find('.js_input_description')
+		var td_result = $(tr).find('.js_input_result')
+		var td_buttons = $(tr).find('.js_button_item_all')
+
+		var old_description = $(tr).data('description')
+		var old_result = $(tr).data('result')
+
+		$(td_description).html('<input type="text" class="form-control" name="new_description" id="new_description"/>')
+		$(td_result).html('<input type="text" class="form-control" name="new_result" id="new_result"/>')
+
+		$("#new_description").val(old_description)
+		$("#new_result").val(old_result)
+
+		$(td_buttons).html(`<button class="btn btn-success btn-xs js_save_item_exam" onclick="savedItemExam(this)"><span class="glyphicon glyphicon-save"></span></button>
+			<button class="btn btn-danger btn-xs js_cancel_item_exam" onclick="cancelItemExam(this)"><span class="glyphicon glyphicon-remove"></span></button>`)
+
+	}
+
+	function cancelItemExam(scope){
+		var tr = $(scope).parent().parent()
+		var td_description = $(tr).find('.js_input_description')
+		var td_result = $(tr).find('.js_input_result')
+		var td_buttons = $(tr).find('.js_button_item_all')
+
+		var old_description = $(tr).data('description')
+		var old_result = $(tr).data('result')
+
+		$(td_description).html(old_description)
+		$(td_result).html(old_result)
+		$(td_buttons).html(`<button class="btn btn-warning btn-xs js_edit_item_exam" onclick="editItemExam(this)"><span class="glyphicon glyphicon-pencil"></span></button>
+			<button class="btn btn-danger btn-xs js_remove_item_exam" onclick="removeItemExam(this)"><span class="glyphicon glyphicon-trash"></span></button>`)
+	}
+
+	function savedItemExam(scope){
+		var tr = $(scope).parent().parent()
+		var td_description = $(tr).find('.js_input_description')
+		var td_result = $(tr).find('.js_input_result')
+		var td_buttons = $(tr).find('.js_button_item_all')
+
+		var new_description = $("#new_description").val()
+		var new_result = $("#new_result").val()
+		var pid = $(".modalAddExam").attr('pid')
+		var epid = $(tr).data('epid')
+
+		$.ajax({
+			url : '/admin/person/updatedexam',
+			type : 'POST',
+			data : {'pid':pid, 'epid':epid, 'description':new_description, 'result':new_result},
+			success : function(response){
+				if (response.status) {
+					$(tr).data('description',new_description)
+					$(tr).data('result',new_result)
+
+					$(td_description).html(new_description)
+					$(td_result).html(new_result)
+					$(td_buttons).html(`<button class="btn btn-warning btn-xs js_edit_item_exam" onclick="editItemExam(this)"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button class="btn btn-danger btn-xs js_remove_item_exam" onclick="removeItemExam(this)"><span class="glyphicon glyphicon-trash"></span></button>`)
+				}
+			}
+		})
+
+	}
+
+	function removeItemExam(scope){
+		var tr = $(scope).parent().parent()
+
+		var pid = $(".modalAddExam").attr('pid')
+		var epid = $(tr).data('epid')
+
+		$.ajax({
+			url : '/admin/person/deletedexam',
+			type : 'POST',
+			data : {'pid':pid, 'epid':epid},
+			success : function(response){
+				if (response.status) {
+					$.ajax({
+						url : '/admin/person/listexam',
+						type : 'POST',
+						data : { 'pid' : pid },
+						success : function(response){
+							$('.list_all_exam').html(response)
+						}
+					})
+				}
+			}
+		})
+	}
+</script>

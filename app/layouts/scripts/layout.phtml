@@ -1,0 +1,40 @@
+<?php echo $this->doctype(); ?>
+<html lang="es">
+	<head>
+		<!-- Mobile Specific Metas -->
+		<?php echo $this->headTitle()?>
+		<?php echo $this->headMeta()?>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+		<!-- <link href="http://fonts.googleapis.com/css?family=Cuprum:400italic,400,700italic,700" rel="stylesheet" type="text/css"> -->
+	
+		<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+		<?php echo $this->headLink()?>
+		<?php echo $this->headScript()?>
+	</head>
+	<body class="content-toggle active">
+		<?php echo $this->render('header.phtml')?>
+		<aside id="sidebar">
+			<ul class="main-menu">
+				<li class="active"><a href="/admin/person"><span class="glyphicon glyphicon-user"></span> GESTIÓN DE PERSONAS</a></li>
+			</ul>
+		</aside>
+		<nav>
+			<div class="navigationLayout">
+				<?php echo $this->placeholder('Btnnav') ?>
+				<?php echo $this->placeholder('Textnav') ?>
+				<?php echo $this->render('_search.phtml') ?>
+			</div>
+			<?php echo $this->placeholder('BtnSVCRight') ?>
+			<?php echo $this->placeholder('BtnSVCLeft') ?>
+		</nav>
+		<main>
+			<?php echo $this->layout()->content ?>
+		</main>
+	</body>
+</html>
+<script type="text/javascript">
+	$(".main-menu>li").on('click', function (e) {
+		$(".main-menu>li").removeClass('active')
+		$(this).addClass('active')
+	})
+</script>

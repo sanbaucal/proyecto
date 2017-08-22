@@ -1,0 +1,45 @@
+<form id="frmrol" name="frmrol" action="/admin/rol/new/" method="Post" enctype="application/x-www-form-urlencode">	
+    <div class="row">
+        <div class='col-md-2'>Cod.Rol:</div>
+        <div class='col-md-4'><?php echo $this->form->rid?></div>
+        <div class='col-md-2'>Prefijo:</div>
+        <div class='col-md-4'><?php echo $this->form->prefix?></div>   
+    </div></br></br> 
+    <div class="row">
+        <div class='col-md-2 col-sm-offset-1'>Nombre:</div>
+        <div class='col-md-6 col-sm-offset-1'><?php echo $this->form->name?></div>
+    </div></br></br>
+    <div class="row">        
+        <div class='col-md-2 col-sm-offset-1'>Módulo :</div>
+        <div class='col-md-6 col-sm-offset-1'><?php echo $this->form->module?></div> 
+    </div></br></br>
+    <div class="row">
+        <div class='col-md-2 col-sm-offset-1'>Estado :</div>
+        <div class='col-md-6 col-sm-offset-1'><?php echo $this->form->state?></div>
+    </div></br></br>        
+</form>
+<div class="modal-footer">
+    <button id="saverol" type="button" class="btn btn-success"><span class='glyphicon glyphicon-save'></span> Guardar</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+</div>
+<script type="text/javascript">
+    $("#saverol").click(function(){   
+        var url="/admin/rol/new/";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data:$("#frmrol").serialize(),
+            success: function (data){
+                $("#nuevo_rol").html(data)
+            }
+        });
+    });
+
+    var clave="<?php echo $this->clave?>";
+    if (clave==1) {
+        $('#myModal').modal('hide');
+        $('#myModal').on('hidden.bs.modal', function (e) {
+            $(location).attr("href", "/admin/rol/")
+        });
+    };
+</script>

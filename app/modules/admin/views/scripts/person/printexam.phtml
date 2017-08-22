@@ -1,0 +1,59 @@
+<?php
+$dir = APPLICATION_LIBRARY."/pdf/MPDF57/mpdf.php";
+include_once($dir);
+ob_start(); 
+?>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+<?php 
+if ($this->dataExam) {  ?>
+	<!-- <h2 class="center"><u>Resultado General</u></h2> -->
+	<br>
+	<p><b>DNI: </b> <?php echo $this->dataPerson['pid'] ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Apellidos y Nombres : </b> <?php echo $this->dataPerson['last_name0'].' '.$this->dataPerson['last_name1'].', '.$this->dataPerson['first_name'] ?></p>
+	<table class="table" style="width: 100%">
+		<thead>
+			<tr>
+				<th><center>#</center></th>
+				<th><center>Descripción</center></th>
+				<th><center>Resultado</center></th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+			foreach ($this->dataExam as $k => $exam) {  ?>
+				<tr>
+					<td class="center"><?php echo $k+1 ?></td>
+					<td><?php echo $exam['description'] ?></td>
+					<td class="center"><?php echo $exam['result'] ?></td>
+				</tr>
+			<?php   
+			}
+			?>  
+		</tbody>
+	</table>
+<?php
+}
+	$header = '
+				<table style="width:100%; margin-bottom:1px; border:2px solid #FFFFFFF;" >
+					<tr>
+						<th style="width: 100px;border-right:1px solid #fff;"><img src="/img/logo.jpg" width="120px" height="100px"></th>
+						<th style="text-align: center;vertical-align:mid;font-size:20px;">
+							<h3 style="color:#2D6CA2">RESULTADO GENERAL</h3>							
+						</th>
+					</tr>
+				</table>
+				';
+	   
+	$html = ob_get_contents();
+  
+	$mpdf=new mPDF('win-1252','A4','','',15,15,40,18,8,5);
+
+	$mpdf->SetHTMLHeader($header);
+	$mpdf->SetHTMLHeader($headerE,'E');
+	$mpdf->SetFooter('{DATE j-m-Y}|{PAGENO}| Derechos reservados 2017');
+
+	ob_end_clean();
+	$mpdf -> WriteHTML($html);
+	$mpdf -> Output('Impresión_examen.pdf','D');
+	// $mpdf -> Output();
+?>

@@ -1,0 +1,411 @@
+body
+	font-family "Cuprum", sans-serif
+	color negroTexto
+	
+body > header
+	background-color l_azul
+	box-shadow 0 2px 0 rgba(black, .2)
+	height 70px
+	position relative
+	z-index 10
+	
+	nav
+		height inherit
+		margin-left auto
+		margin-right auto
+		max-width 1700px
+		position relative
+
+	figure
+		display none
+		padding .4em
+		position absolute
+		text-align center
+		width 30%
+		overflow hidden
+
+	div:nth-of-type(1)
+		border-left 3px l_rojo solid
+		height 100%
+		left 0
+		padding .5em
+		padding-top .9em
+		position absolute
+
+		p
+			color white
+			margin-bottom .5em
+			text-shadow 1px 1px 1px rgba(black, .4)
+
+	div:nth-of-type(2)
+		float right
+		height 70px
+		padding-top 1.4em
+		position relative
+		width 20%
+		text-align center
+
+		& > a
+			font-size 1.7em
+			color white
+			
+		& > a:hover
+			color azulHover
+			
+		ul
+			display none
+			left -100%
+			padding 0
+			position absolute
+			top 100%
+			width 200%
+			z-index 50
+
+			li
+				list-style-type none
+
+			a
+				background-color l_azul
+				color white
+				display block
+				padding .7em
+				text-align left
+				text-decoration none
+				height 100%
+
+			a:hover
+				background-color l_rojo
+				padding-left 1em
+		
+		ul.active
+			animation .3s displayUl ease 
+			display block
+
+		ul.inactive
+			animation .3s hiddenUl ease 
+
+@media screen and (min-width:700px)
+	body > header
+		figure
+			display block
+
+		div:nth-of-type(1)
+			padding-left 1em
+			border-left 3px l_rojo solid
+			left 30%
+
+		div:nth-of-type(2)
+			width 10%
+
+@media screen and (min-width:850px)
+	body > header
+		figure
+			display block
+			width 25%
+
+		div:nth-of-type(1)
+			left 25%
+			
+@media screen and (min-width:1024px)
+	body > header
+		figure
+			position fixed
+			background-color l_azul
+			display block
+			width 20%
+
+		div:nth-of-type(1)
+			left 20%
+
+		div:nth-of-type(2)
+			padding 0
+			width auto
+			
+			&>a
+				display none
+
+			ul
+				display block
+				position relative
+				width auto
+				margin 0
+				left 0
+				top 0
+				height 100%
+				z-index 0
+					
+				li
+					height 100%
+					display inline-block
+
+					a
+						padding 1.7em 2em
+						
+					a:hover
+						padding 1.7em 2em
+
+
+
+@media screen and (min-width:1366px)
+	body > header
+		figure
+			display block
+			width 17%
+
+		div:nth-of-type(1)
+			left 17%
+
+body>nav
+	background plomo
+	box-shadow 0 2px 1px rgba(black, .2)
+	height 35px
+	position absolute
+	right 0
+	width calc(100% - 17%)
+
+	.navigationLayout
+		height inherit
+		margin-left auto
+		margin-right auto
+		max-width 1700px
+		overflow hidden
+		position relative
+		
+	.navigationButtonsMainLayout
+		display inline-block
+		floa left
+		height 100%
+		width 25%
+
+		a
+			color plomoTexto
+			height 100%
+			font-size 1.4em
+			text-align center
+			padding .3em
+			display block
+
+		a:hover
+			background plomoOscuro
+
+	.main_title_paragraph
+		border-left 2px plomoOscuro solid
+		height 100%
+		font-size 1.1em
+		left 25%
+		text-shadow 1px 1px 1px rgba(black, .2)
+		padding .5em 1.5em
+		position absolute
+		top 0
+
+	form
+		display none
+		float right
+		height 100%
+		width 35%
+			
+		input
+			display none
+			border 0
+			background white
+			border-left 2px plomoOscuro solid
+			display inline-block
+			height 100%
+			margin-left 20%
+			padding-left 1em
+			transition all .3s
+			width 60%
+
+		input:focus
+			outline 0
+			margin-left 0
+			width 80%
+
+		button
+			background white
+			border 0
+			box-shadow 0 0 0
+			color plomoTexto
+			font-size 1.2em
+			float right
+			height 100%
+			padding-top .4em
+			text-align center
+			width 20%
+
+		button:hover
+			color azul
+			
+	.navigationButtonsSVCLayoutRight
+		background rgba(black, 0.2)
+		padding 1em
+		position absolute
+		right 3em
+		top 50px
+		z-index 10
+
+		a
+			border-radius 0
+			position relative
+			z-index 6
+
+	.navigationButtonsSVCFixed
+		position fixed
+		top 10px
+
+	.navigationButtonsSVCLayoutLeft
+		background rgba(black, 0.2)
+		padding 1em
+		z-index 5
+		position fixed
+		top 130px
+		left 3em
+
+		a
+			border-radius 0
+			position relative
+			z-index 6
+
+@media screen and (min-width:700px)
+	body>nav
+		.navigationButtonsMainLayout
+			width 30%
+
+		.main_title_paragraph
+			left 30%
+
+		form
+			display block
+
+@media screen and (min-width:850px)
+	body>nav
+		.navigationButtonsMainLayout
+			width 25%
+
+		.main_title_paragraph
+			left 25%
+			
+@media screen and (min-width:1024px)
+	body>nav
+		.navigationButtonsMainLayout
+			width 20%
+
+		.main_title_paragraph
+			left 20%
+
+		form
+			width 35%
+				
+			input
+				margin-left 40%
+				width 50%
+
+			input:focus
+				width 90%
+
+			button
+				width 10%
+
+@media screen and (min-width:1366px)
+	body>nav
+		.navigationButtonsMainLayout
+			width 17%
+
+		.main_title_paragraph
+			left 17%
+body>.aux
+	position relative
+
+body>footer
+	background negroPlomo
+	box-shadow 0 -2px 0 rgba(black, 0.5)
+	bottom 0
+	height 38px
+	margin-top 0.5em
+	position fixed
+	text-align center
+	width 100%
+	z-index 20
+	
+	ul
+		padding 0
+		height inherit
+		width inherit
+
+		li
+			border-left 2px negroOscuro solid
+			border-right 2px negroOscuro solid
+			display inline-block
+			height inherit
+			padding 0
+			margin-left -6px
+			position relative
+			width 200px
+
+			a
+				color white
+				height 100%
+				padding-top 0.7em
+				position absolute
+				left 0
+				text-align center
+				text-shadow 1.2px 1.2px 0 rgba(negroOscuro, 1)
+				transition 0.25s background
+				width 100%
+
+			a:hover 
+				background negroOscuro
+				color white
+				text-decoration none
+
+			.desplegableLayout
+				bottom 100%
+				box-shadow 0 1px 3px rgba(black, 0.2)
+				display none
+				opacity 0
+				position absolute
+				width 100%
+
+				ul
+					width 102%
+
+					li
+						background negroPlomo
+						height 38px
+						margin-bottom -6px
+						left 2px
+						position relative
+						width 100%
+
+		li:hover .desplegableLayout
+			animation menuAnimation .5s
+			opacity 1
+			display block
+
+.hidden
+	display none
+
+div.classLoading_Overlay
+	min-height 100%
+	position fixed
+	width 100%
+	z-index 999
+
+	.loading_message
+		background white
+		left 50%
+		font-weight bold
+		margin-left -3em
+		padding 0.5em
+		padding-left 1.5em
+		padding-right 1.5em
+		position absolute
+		z-index 1000
+
+	.loading_allBlack
+		background black
+		position absolute
+		opacity 0.7
+		height 100%
+		width 100%
+		z-index 999

@@ -1,0 +1,104 @@
+<style type="text/css">
+	.form-control{
+		width: 100% !important;
+	}
+	.errors{
+		color: #F1615E;
+	}
+</style>
+
+<form class="form-inline" id="<?php echo $this->fm->getName() ?>" name="<?php echo $this->fm->getName() ?>"  method="POST" enctype="application/x-www-fm-urlencode">
+	<div class="row">
+		<div class='col-md-1'>DNI:</div>
+		<div class='col-md-3'><?php echo $this->fm->pid?></div>
+		<div class='col-md-1'>Estado Civil:</div>
+		<div class='col-md-3'><?php echo $this->fm->civil?></div>
+		<div class='col-md-1'>Sexo:</div>
+		<div class='col-md-3'><?php echo $this->fm->sex?></div>
+	</div>
+	<br>
+	<div class="row">
+		<div class='col-md-1'>Apellido Paterno:</div>
+		<div class='col-md-3'><?php echo $this->fm->last_name0?></div>
+		<div class='col-md-1'>Apellido Materno:</div>
+		<div class='col-md-3'><?php echo $this->fm->last_name1?></div>
+		<div class='col-md-1'>Nombres:</div>
+		<div class='col-md-3'><?php echo $this->fm->first_name?></div>
+	</div></br></br>
+	<div class="row">
+		<div class='col-md-1'>Dirección:</div>
+		<div class='col-md-3'><?php echo $this->fm->address?></div>
+		<div class='col-md-1'>Teléfono:</div>
+		<div class='col-md-3'><?php echo $this->fm->phone?></div>
+		<div class='col-md-1'>Celular:</div>
+		<div class='col-md-3'><?php echo $this->fm->cellular?></div>
+	</div></br></br>
+	<div class="row">
+		<div class='col-md-1'>Fecha de Nacimiento:</div>
+		<div class='col-md-3'><?php echo $this->fm->birthday?></div>
+		<div class='col-md-1'>E-mail Personal</div>
+		<div class='col-md-3'><?php echo $this->fm->mail_person?></div>
+		<div class='col-md-1'>E-mail Trabajo</div>
+		<div class='col-md-3'><?php echo $this->fm->mail_work?></div>
+		
+	</div>
+</form>
+<hr>
+<div class="alert alert-success js_message_success hidden"></div>
+<div class="modal-footer text-right">
+	<button id="saveperson" type="button" class="btn btn-success"><span class='glyphicon glyphicon-save'></span> Guardar</button>
+	<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+</div>
+<script type="text/javascript">
+	$("#birthday").datepicker();	
+	
+	$("#saveperson").click(function(){   
+		var url="/admin/person/new/";
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data:$("#frmperson").serialize(),
+			success: function (data){
+				$(".load_form_person").html(data)
+			}
+		})
+	})
+
+	var valor="<?php echo $this->valor?>";
+	if (valor == 1) {		
+		$('.js_message_success').removeClass("hidden")
+		$('.js_message_success').html("Se guardó con exitó")
+		setTimeout(function(){
+			$('.modalPerson').modal('hide');
+			$('.js_message_success').addClass("hidden")
+		},1000)
+
+		$('.modalPerson').on('hidden.bs.modal', function (e) {
+			var url = '/admin/person'
+			window.location.href = url
+		})
+	}
+
+	function validNumber(e) {
+		var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+		return ((tecla > 47 && tecla < 58) || tecla == 8);
+	} 
+	function soloLetras(e){
+		key = e.keyCode || e.which;
+		tecla = String.fromCharCode(key).toLowerCase();
+		letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+		especiales = [8,37,39,46];
+
+		tecla_especial = false
+		for(var i in especiales){
+			if(key == especiales[i]){
+				tecla_especial = true;
+				break;
+			}
+		}
+
+		if(letras.indexOf(tecla)==-1 && !tecla_especial){
+			return false;
+		}
+	}
+</script>

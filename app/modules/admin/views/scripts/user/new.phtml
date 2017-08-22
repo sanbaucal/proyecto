@@ -1,0 +1,65 @@
+<?php $this->placeholder('Textnav')->append('<span class="glyphicon glyphicon-user"></span> GESTION DE USUARIOS');?>
+<?php $this->placeholder('Btnnav')->append('<a href="/admin/user/index" ><span class="glyphicon glyphicon-circle-arrow-left"></span></a>');?>
+<form name="<?php echo $this->fm->getName(); ?>" id ="frmFiltroDoc" action="/admin/user/getusernew" method="POST" enctype="application/x-www-form-urlencoded" class="form-horizontal" >
+    <table class="table span9 table-striped table-bordered table-condensed">
+    <tr class="info">
+        <td class='text-center'>
+            <p><span class='glyphicon glyphicon-exclamation-sign'> </span> Primero, busque una Persona por su DNI</p>
+        </td>
+    </tr>
+        <tr>
+            <td>
+                <p style='font-size: 15px; float:left; margin-right:20px'>Ingrese Número de DNI: <div style='width: 250px;float:left'><?php echo $this->fm->pid?></p>
+            </td>
+        </tr>
+        <tr>
+            <td class='text-center'>
+                <button type="button" id="btnBuscar" data-loading-text="buscando..." class="btn btn-success"><span class='glyphicon glyphicon-search'></span> Buscar
+                </button>
+            </td>
+        </tr>   
+    </table>
+</form>
+<div id="cargadatos_"></div> 
+<script>
+    $("#pid").keypress(function(e) {
+        if(e == 13 || e.which==13 || e.which==0){
+            var codi =  $('#pid').val();
+            count=codi.length;
+            if (count==8 || count==0)
+            {
+                btn = $("#btnBuscar")
+                buscarDatos();
+                btn.button('loading')
+            }
+            else
+            {
+                alert("Ingrese un DNI valido");
+                $('#pid').val('');
+            }
+        }
+    });
+    $("#btnBuscar").click(function() {
+        btn = $(this)
+        buscarDatos();
+        btn.button('loading')
+    });
+    function buscarDatos(){
+        $('#cargadatos_').html("<img src='/img/spinner.gif'> Cargando....");
+        $.ajax({
+        type: 'POST',
+        url: $("#frmFiltroDoc").attr('action'),
+        data: $("#frmFiltroDoc").serialize(),
+        success: function(data) {                        
+            $('#cargadatos_').html(data);    
+            btn.button('reset');
+            }
+        }); 
+        return false;
+    }
+
+function validNumber(e) {
+    var tecla = document.all ? tecla = e.keyCode : tecla = e.which;
+    return ((tecla > 47 && tecla < 58) || tecla == 8);
+    }    
+</script> 

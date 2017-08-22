@@ -1,0 +1,142 @@
+.content-toggle
+	display none
+	
+.content-toggle.fadeIn
+	animation fadeUp .3s ease-in
+	display block
+.content-toggle.fadeOut
+	animation fadeOut .3s ease-in
+
+.content-toggle.active
+	animation vohShowContent .3s linear
+	display block
+	// position relative
+	
+.content-toggle.inactive
+	animation vohHideContent .3s linear
+	
+
+
+@keyframes displayUl
+	from
+		top 115%
+		opacity 0
+	to
+		top 100%
+		opacity 1
+
+@keyframes hiddenUl
+	from
+		top 100%
+		opacity
+	to
+		top 115%
+		opacity 0
+
+
+@keyframes menuAnimation
+	from
+		opacity 0
+  	to
+		opacity 1
+
+//animations para position relative
+@keyframes r_s_fadeUp
+	from
+		opacity 0
+		top 20px
+	to
+		opacity 1
+		top 0	
+
+@keyframes r_h_fadeDown
+	from
+		opacity 1
+		top 0	
+	to
+		opacity 0
+		top 20px
+
+@keyframes content_show
+	from
+		margin-top 20px
+		opacity 0
+	to
+		margin-top 0
+		opacity 1
+
+@keyframes content_hide
+	from
+		margin-top 0
+		opacity 1
+	to
+		margin-top 20px
+		opacity 0
+
+
+
+@keyframes fadeUp
+	from
+		opacity 0
+	to
+		opacity 1
+		
+@keyframes fadeOut
+	from
+		opacity 1
+	to
+		opacity 0
+
+
+@keyframes message_appear
+	0%
+		opacity 0
+		top 20px
+	3%
+		opacity 1
+		top 0
+	97%
+		opacity 1
+		top 0
+	100%
+		opacity 0
+		top 20px
+		
+@keyframes load_animation
+	0%
+		transform rotate(0deg)
+	100%
+		transform rotate(360deg)
+
+
+@keyframes vohShowContent
+	from
+		opacity 0
+		transform scale(.97, .97)
+	to
+		opacity 1
+		transform scale(1, 1)
+		
+@keyframes vohHideContent
+	from
+		opacity 1
+		transform scale(1, 1)
+	to
+		opacity 0
+		transform scale(.97, .97)
+		
+@keyframes showMessageFeedback
+	from
+		opacity 0
+		top calc(100% + .5em - 5px)
+	to
+		opacity 1
+		top calc(100% + .5em)
+		
+@keyframes hideMessageFeedback
+	from
+		opacity 1
+		top calc(100% + .5em)
+	to
+		opacity 0
+		top calc(100% + .5em - 5px)

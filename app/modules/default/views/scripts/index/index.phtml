@@ -1,0 +1,38 @@
+<section class="login-side">
+	<section class="login-info">
+		<section class="login-side__body__welcome">
+			<div class="logo__imagen">
+				<img src="/img/logo.jpg" alt="logoInstitution" width="120" height="120" class="img-circle">
+			</div>
+			<div class="message__login"><b>BIENVENIDO AL PORTAL DE REGISTRO DE USUARIOS</b></div>
+			<div class="all__rights__reserved">Derechos Reservados © 2017</div>
+		</section>
+	</section>
+	<section class="login-sign">
+		<section class="login-side__body__form">
+			<div class="title__form__side">Ingrese a su cuenta</div>
+			<form class="login-side__body__form-side" name="<?php echo $this->form->getName();?>" action="<?php echo $this->form->getAction();?>" method="post" enctype="application/x-www-form-urlecncoded">
+				<div class="input-icon">
+					<?php echo $this->form->usuario ?>
+					<span class="icon-user"></span>
+				</div>
+
+				<div class="input-icon">
+					<?php echo $this->form->clave ?>
+					<span class="icon-key"></span>
+				</div>
+				<p class="form-side__error"><?php echo $this->msgerror?></p>
+				<?php echo $this->form->enviar ?>
+				<section class="login-side__recovery-password">
+					<div class="link"><a href="#">¿Olvidaste tu contraseña?</a></div>
+				</section>
+			</form>
+		</section>
+	</section>
+</section>
+<script type="text/javascript">
+	$(".errors").on('click', function(){
+		$(this).parent().find('input').focus()
+		$(this).remove()
+	})
+</script>

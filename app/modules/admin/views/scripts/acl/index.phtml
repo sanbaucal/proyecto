@@ -1,0 +1,65 @@
+<?php $this->placeholder('Textnav')->append('<span class="glyphicon glyphicon-list"></span> Lista de Modulos');?>
+<?php $this->placeholder('Btnnav')->append(' <a href="/admin/correctnotes" ><span class="glyphicon glyphicon-circle-arrow-left"></span></a>');?>
+<div style="text-align:right">
+	<a data-toggle="modal" data-target="#modalNewModel" href="/admin/acl/new" class="btn btn-info" ><span class="glyphicon glyphicon-plus-sign"></span> Nuevo</a>
+</div>
+</br>
+<!-- end header-->
+<div class="row">
+	<div class="col-md-9 col-md-offset-1">
+		<table class="table table-bordered">
+		  <thead>
+		  	<tr>
+		        <th class='text-center'>#</th>
+		        <th class='text-center'>Nombre</th>
+		        <th class='text-center'>Icono</th>
+			    <th class='text-center'>Recursos</th>
+		        <th class='text-center'>Editar</th>
+		        <th class='text-center'>Estado</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+				<?php foreach ($this->modules as $key => $module) {?>
+					<tr>
+						<td><?php echo $key+1?></td>
+						<td><?php echo $module['name']?></td>
+						<td class="text-center text-muted"><span class='glyphicon glyphicon-<?php echo $module['imgicon']?>'></span></td>
+						<td class='text-center'>
+							<a href="/admin/acl/listresource/<?php echo base64_encode('mid')?>/<?php echo base64_encode($module['mid'])?>"><span  class='glyphicon glyphicon-plus-sign style-icon-all text-warning'></span></a>
+						</td>
+						<td class='text-center'>
+							<span mid="<?php echo base64_encode($module['mid'])?>" class='glyphicon glyphicon-edit model-edit style-icon-all text-primary' ></span>
+						</td>
+						<td class="text-center"><?php echo ($module['state']=='A')? "<span class='text-success glyphicon glyphicon-ok-circle style-icon-all'></span>":"<span class='text-danger glyphicon glyphicon-remove-circle style-icon-all'></span>"?></td>
+					</tr>
+				<?php }?>		  		
+		   </tbody>
+		</table>
+	</div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    
+</div><!-- /.modal -->
+<div class="modal fade" id="modalNewModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    
+</div><!-- /.modal -->
+
+<script>
+	$(".model-edit").click(function(){
+		$.ajax({
+			url:"/admin/acl/edit/",
+			data:{mid:$(this).attr('mid')},
+			success:function($data){
+				$('#myModal').modal('show');
+				$('#myModal').html($data);
+			},
+			error:function ($error) {
+				alert('Disculpe, existió un problema');
+			}
+		});
+		return false;
+	});
+
+
+</script>

@@ -1,0 +1,200 @@
+<?php
+if ($this->dataperson and $this->dataperson[0]){ ?>
+
+<table class="table table-hover table-bordered table-striped">
+	<thead>
+		<tr>
+			<th class="text-center">#</th>
+			<th class="text-center">DNI</th>
+			<th class="text-center">Apellidos</th>
+			<th class="text-center">Nombres</th>
+			<th class="text-center">Dirección</th>
+			<th class="text-center">Celular</th>
+			<th colspan="2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php 
+		foreach ($this->dataperson as $i => $data) {	?>
+			<tr>
+				<td class="text-center"><?php echo $i+1 ?></td>
+				<td class="text-center"><?php echo $data['pid'] ?></td>
+				<td><?php echo $data['last_name0'].' '.$data['last_name1'] ?></td>
+				<td><?php echo $data['first_name'] ?></td>
+				<td><?php echo $data['address'] ?></td>
+				<td class="text-center"><?php echo $data['cellular'] ?></td>
+				<td class="text-center"><a href="#" title="Editar" class="js_edit_person" data-pid='<?php echo $data['pid'] ?>'><span class="glyphicon glyphicon-edit"></span></a></td>
+				<td class="text-center"><a href="#" title="Añadir exámenes" class="js_add_exam" data-pid='<?php echo $data['pid'] ?>'><span class="glyphicon glyphicon-plus"></span></a></td>
+			</tr>
+		<?php
+		}
+		?>
+	</tbody> 
+</table>
+<?php
+}
+else{
+?>
+<div class='alert alert-info text-center'>
+	<div><span class='glyphicon glyphicon-exclamation-sign' ></span> <b>La persona no se ENCUENTRA registrado en el SISTEMA....</b></div>
+</div>
+<?php
+exit();
+}
+?>
+
+<div class="modal fade modalPersonEdit" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title text-center text-primary"><b>Editar Persona</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class='load_form_person_edit'></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade modalAddExam" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title text-center text-primary"><b>Exámenes</b></h4>
+			</div>
+			<div class="modal-body">
+				<form id="frmAddExam" name="frmAddExam">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="col-md-5">
+								<label for="description">Descripción</label>
+								<input type="text" name="description" class="form-control" id="description">
+							</div>
+							<div class="col-md-5">
+								<label for="result">Resultado</label>
+								<input type="text" name="result" class="form-control" id="result">
+							</div>
+							<div class="col-md-2 text-center">
+								<label>Añadir</label>
+								<button class="btn btn-info js_add_exam_person"><span class="glyphicon glyphicon-plus"></span></button>
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-10 js_message_alert hidden"></div>
+					</div>
+				</form>
+				<br>
+				<div class="list_all_exam"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(".js_edit_person").on('click', function(event){
+		event.preventDefault()
+		$(".modalPersonEdit").modal('show')
+		var pid = $(this).data('pid')
+
+		$(".load_form_person_edit").html("<center><img src='/img/spinner.gif'> Cargando...</center>")
+		setTimeout(function(){
+			$(".load_form_person_edit").load('/admin/person/updateperson/pid/'+pid)
+		},500)      
+	})
+
+	$(".js_add_exam").on('click', function(event){
+		event.preventDefault()
+		var pid = $(this).data('pid')
+
+		$.ajax({
+			url : '/admin/person/listexam',
+			type : 'POST',
+			data : { 'pid' : pid },
+			success : function(response){
+				$('.list_all_exam').html(response)
+			}
+
+		})
+
+		$(".modalAddExam").attr('pid',pid)
+		$(".modalAddExam").modal('show')
+	})
+
+	$(".js_add_exam_person").on('click', function(event){
+		event.preventDefault()
+		var pid = $(".modalAddExam").attr('pid')
+		var description = $("#description").val()
+		var result = $("#result").val()
+
+		if (!description) {
+			$(".js_message_alert").removeClass('hidden')
+			$(".js_message_alert").html('<div class="alert alert-danger"><p class="text-danger"><b> Ingrese una descripción</b></p></div>')
+
+			setTimeout(function(){
+				$(".js_message_alert").addClass('hidden')
+			},3000)
+			return false
+		}
+
+		if (!result) {
+			$(".js_message_alert").removeClass('hidden')
+			$(".js_message_alert").html('<div class="alert alert-danger"><p class="text-danger"><b> Ingrese un resultado</b></p></div>')
+
+			setTimeout(function(){
+				$(".js_message_alert").addClass('hidden')
+			},3000)
+
+			return false
+		}
+
+		if (description && result) {
+			$.ajax({
+				url : '/admin/person/savexam',
+				type : 'POST',
+				data : {'pid': pid,'description': description,'result': result},
+				success : function(response){
+					if (response.status) {
+						$(".js_message_alert").removeClass('hidden')
+						$(".js_message_alert").html('<div class="alert alert-success"><p class="text-success"><b> Se guardó correctamente</b></p></div>')
+
+						setTimeout(function(){
+							$("#description").val('')
+							$("#result").val('')
+							$(".js_message_alert").addClass('hidden')
+							$.ajax({
+								url : '/admin/person/listexam',
+								type : 'POST',
+								data : { 'pid' : pid },
+								success : function(response){
+									$('.list_all_exam').html(response)
+								}
+							})
+						},2000)
+					}
+					else{
+						$(".js_message_alert").removeClass('hidden')
+						$(".js_message_alert").html('<div class="alert alert-danger"><p class="text-danger"><b> Hubo un problema al guardar.</b></p></div>')
+
+						setTimeout(function(){
+							$(".js_message_alert").addClass('hidden')
+						},3000)
+					}
+				},
+				error : function(){
+					$(".js_message_alert").removeClass('hidden')
+					$(".js_message_alert").html('<div class="alert alert-danger"><p class="text-danger"><b> No hay respuesta. Intente más tarde</b></p></div>')
+
+					setTimeout(function(){
+						$(".js_message_alert").addClass('hidden')
+					},3000)
+				}
+
+			})
+		}
+	})
+</script>

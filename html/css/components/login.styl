@@ -1,0 +1,140 @@
+@font-face {
+	font-family: 'iconLogin';
+	src:url('/css/icomoon.eot?-2n8uof');
+	src:url('/css/icomoon.eot?#iefix-2n8uof') format('embedded-opentype'),
+		url('/css/icomoon.woff?-2n8uof') format('woff'),
+		url('/css/icomoon.ttf?-2n8uof') format('truetype'),
+		url('/css/icomoon.svg?-2n8uof#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body.login
+	background: red; /* For browsers that do not support gradients */
+	background -webkit-linear-gradient(90deg, l_azul, l_rojo) /* For Safari 5.1 to 6.0 */
+	background linear-gradient(90deg, l_azul, l_rojo) /* For Safari 5.1 to 6.0 */
+	
+.login-side
+	color white
+	margin-left auto
+	margin-right auto
+	margin-top 120px
+	min-height 350px
+	max-width 800px
+	display flex
+	
+	.login-info
+		background l_rojo
+		padding 1em
+		width 50%
+		.login-side__body__welcome
+			display flex
+			flex-direction column
+			align-items flex-end
+			justify-content space-between
+			height 100%
+			width 90%
+			.message__login
+				width 51%
+				text-align end
+			
+			.all__rights__reserved
+				font-size 10px
+				text-align end
+	.login-sign
+		background l_azul
+		width 50%
+		
+		.login-side__body__form
+			display flex
+			flex-direction column
+			justify-content center
+			height 100%
+			
+			.title__form__side
+				margin-left 10%
+				padding 1em 1em 2em 0
+				font-size 16px
+				
+			.login-side__body__form-side
+				.input-icon
+					position relative
+					span
+						color l_rojo
+						left 1.5em
+						position absolute
+						top 50%
+						margin-top -10px
+						-webkit-transition all 0.3s
+						-moz-transition all 0.3s
+						-o-transition all 0.3s
+						-ms-transition all 0.3s
+						transition all 0.3s
+				.input__login
+					background l_azul
+					border 0
+					border-bottom 1px solid #646362
+					border-top 1px solid #646362
+					color #dcdcdc
+					padding 1.5em 1.5em 1.5em 4em
+				.user-code
+					border-bottom 0
+				
+				.login-side__recovery-password
+					display flex
+					justify-content flex-end
+					padding-right 1em
+					
+					div
+						width 50%
+						text-align end
+						
+						a
+							color #86958B
+				ul.errors
+					padding 1em
+					position absolute
+					top 0
+					text-align end
+					width 100%
+
+					li
+						list-style-type none
+						display block
+						color l_rojo
+						font-size .8em
+						
+				.form-side__error
+					padding-left 4em
+					padding-top 1em
+					text-align left
+					font-weight bold
+					margin-bottom 0
+			
+			.button__submit
+				width 45%
+				border-bottom 1px solid l_rojo
+				border-right 1px solid l_rojo
+				border-top 1px solid l_rojo
+				border-left 0
+				color l_rojo
+				padding .8em
+				background l_azul
+				border-radius 0 10em 10em 0
+				
+				&:focus
+				&:hover
+					background l_rojo
+					color white
+// icons
+span.icon-user
+	&:after
+		content "\e602"
+		font-family "iconLogin"
+		font-size 1.4em
+
+span.icon-key
+	&:after
+		content "\e604"
+		font-family "iconLogin"
+		font-size 1.4em
